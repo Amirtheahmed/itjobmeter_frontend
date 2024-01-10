@@ -59,7 +59,7 @@ function FooterSocial() {
           <ActionIcon
             aria-label="Email"
             component="a"
-            href="mailto:c34560814@gmail.com"
+            href="mailto:amirsalihdev@gmail.com"
             size="lg"
           >
             <IconMail size="1.5rem" stroke={1.5} />

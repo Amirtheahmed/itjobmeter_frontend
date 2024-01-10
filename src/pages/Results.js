@@ -18,12 +18,12 @@ export default function Results({ allData }) {
       stats: allData
         ? date_diff_days(allData.metadata.last_update.toDate(), new Date())
         : "... hours ago",
-      description: "myjob.mu website is scraped on a daily basis",
+      description: "Job portals are scraped on a daily basis",
     },
     {
       title: "Total jobs scraped",
       stats: allData ? allData.metadata.size : "...",
-      description: "Total number of jobs scraped from myjob.mu",
+      description: "Total number of jobs scraped across different job portals",
     },
   ];
 

@@ -11,13 +11,13 @@
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const config = {
-  apiKey: "AIzaSyBkrtvS_G4-gzskH3kAvIRtsumd_0aHoNk",
-  authDomain: "itjobmeter-stats.firebaseapp.com",
-  projectId: "itjobmeter-stats",
-  storageBucket: "itjobmeter-stats.appspot.com",
-  messagingSenderId: "805823465043",
-  appId: "1:805823465043:web:8a411764ecbf65f904e8a6",
-  measurementId: "G-R1KBJC7T5Y"
+  apiKey: "AIzaSyC_p7NedLeSM_GkyTO8TpByytGX4iBYNC0",
+  authDomain: "itjobmeter-frontend.firebaseapp.com",
+  projectId: "itjobmeter-frontend",
+  storageBucket: "itjobmeter-frontend.appspot.com",
+  messagingSenderId: "109642899594",
+  appId: "1:109642899594:web:406a2f469c165f89d00d73",
+  measurementId: "G-NHS79NSC22"
 };
 
 export function getFirebaseConfig() {

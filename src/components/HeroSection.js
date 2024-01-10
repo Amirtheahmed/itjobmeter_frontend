@@ -87,13 +87,13 @@ export default function HeroSection() {
             gradient={{ from: "blue", to: "cyan" }}
             inherit
           >
-            insights
+            IT Job insights
           </Text>{" "}
           with our visualization tool.{" "}
         </h1>
 
         <Text className={classes.description} color="dimmed">
-          Visualize the latest job trends in the IT job market in Mauritius.
+          Select country below to get started.
         </Text>
 
         <Group className={classes.controls}>
@@ -104,7 +104,7 @@ export default function HeroSection() {
             color="orange"
             variant="outline"
           >
-            View results
+            Turkey 🇹🇷
           </Button>
         </Group>
       </Container>

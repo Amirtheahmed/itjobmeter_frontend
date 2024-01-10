@@ -21,16 +21,9 @@ export default function Logo({ logoSize = 48, fontSize = 28 }) {
   return (
     <Link title="Go to home page" style={{ textDecoration: "none" }} to={"/"}>
       <Group className={classes.logo}>
-        <IconChartLine color="red" size={logoSize} strokeWidth={2} />
         <Text inherit>
           <Text inherit span color="blue">
-            my
-          </Text>
-          <Text inherit span color="yellow">
-            job
-          </Text>
-          <Text inherit span color="green">
-            viz
+            ITJobsMeter
           </Text>
         </Text>
       </Group>

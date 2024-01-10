@@ -17,7 +17,7 @@ export default function Methodology() {
             title="Scraping"
           >
             <Text color="dimmed" size="sm">
-              IT job posts are scraped from myjob.mu website
+              IT job posts are scraped
             </Text>
           </Timeline.Item>
           <Timeline.Item
