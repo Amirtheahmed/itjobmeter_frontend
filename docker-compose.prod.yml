@@ -5,7 +5,7 @@ services:
     image: amirtheahmed/itjobsmeter_frontend:latest
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.itjobsmeter_frontend.rule=Host(`itjobsmeter.amirtheahmed.dev`, `www.itjobsmeter.amirtheahmed.dev`)"
+      - "traefik.http.routers.itjobsmeter_frontend.rule=Host(`itjobsmeter.amirtheahmed.dev`)"
       - "traefik.http.routers.itjobsmeter_frontend.entrypoints=https"
     environment:
       - NGINX_PORT=80

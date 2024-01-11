@@ -51,7 +51,7 @@ function FooterSocial() {
           <ActionIcon
             aria-label="Github"
             component="a"
-            href="https://github.com/amirtheahmed/itjobmeter"
+            href="https://github.com/amirtheahmed"
             size="lg"
           >
             <IconBrandGithub size="1.5rem" stroke={1.5} />

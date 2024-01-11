@@ -74,6 +74,7 @@ jobs:
           script: |
             docker pull amirtheahmed/itjobsmeter_frontend:latest &&
             cd /home/amirtheahmed/apps/itjobsmeter_frontend &&
+            git pull &&
             docker-compose -f docker-compose.prod.yml down &&
             docker-compose -f docker-compose.prod.yml up --build -d    
 
