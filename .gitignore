@@ -26,3 +26,8 @@ yarn-debug.log*
 yarn-error.log*
 
 .env
+.idea
+
+temp
+*codebase.md
+repomix.config.json

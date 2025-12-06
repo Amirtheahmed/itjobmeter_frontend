@@ -1,84 +1,65 @@
-name: Push
+# .github/workflows/push.yml
+name: Build and Push
 
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'README.md'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   docker:
     name: 🐳 Build Docker image
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Get repository info
-        uses: gacts/github-slug@v1
-        id: slug
-
-      - name: Setup QEMU
+      - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
-      - name: Setup Docker buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Login to Dockerhub
+      - name: Log in to the Container registry
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_LOGIN }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Get Current Date
-        id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=sha,format=long
+            type=ref,event=branch
+            latest
 
       - name: Build & Push Docker image
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: Dockerfile
           push: true
           platforms: linux/amd64,linux/arm64
-          build-args: |
-            APP_VERSION=${{ steps.slug.outputs.version }}"
-            DATE_CREATED=${{ steps.date.outputs.date }}
-          tags: |
-            amirtheahmed/itjobsmeter_frontend:${{ steps.slug.outputs.version }}
-            amirtheahmed/itjobsmeter_frontend:latest
-
-  deploy:
-    name: 🐳 Deploy Docker image
-    runs-on: ubuntu-latest
-    needs: docker
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Sleep for 30 seconds
-        run: sleep 20
-
-      - name: Setup SSH & Deploy
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: 22
-          script: |
-            docker pull amirtheahmed/itjobsmeter_frontend:latest &&
-            cd /home/amirtheahmed/apps/itjobsmeter_frontend &&
-            git pull &&
-            docker-compose -f docker-compose.prod.yml down &&
-            docker-compose -f docker-compose.prod.yml up --build -d    
-
-permissions:
-  security-events: write
-  contents: write
-  id-token: write
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
