@@ -2,10 +2,9 @@
 name: Build and Push
 
 on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - 'README.md'
+  release:
+    types: [published]
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -48,9 +47,12 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=sha,format=long
-            type=ref,event=branch
-            latest
+            # Tags the image with the semantic version (e.g., 1.0.1, 1.0, 1)
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            # Also tags with 'latest'
+            type=raw,value=latest
+            type=sha
 
       - name: Build & Push Docker image
         uses: docker/build-push-action@v5
