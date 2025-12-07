@@ -1,5 +1,5 @@
 # Stage 1: Build the React application
-FROM node:21.6.0-alpine as build
+FROM node:20.9.0-alpine as build
 
 WORKDIR /app
 
@@ -17,6 +17,9 @@ RUN npm run build
 
 # Stage 2: Serve the app with Nginx
 FROM nginx:stable-alpine
+
+# Replace default nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Copy the build output from the previous stage
 COPY --from=build /app/build /usr/share/nginx/html
