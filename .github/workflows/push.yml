@@ -47,12 +47,9 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            # Tags the image with the semantic version (e.g., 1.0.1, 1.0, 1)
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            # Also tags with 'latest'
+            type=ref,event=tag
             type=raw,value=latest
-            type=sha
+            type=sha   
 
       - name: Build & Push Docker image
         uses: docker/build-push-action@v5
